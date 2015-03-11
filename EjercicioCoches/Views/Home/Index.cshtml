@@ -1,0 +1,43 @@
+﻿@model IEnumerable<EjercicioCoches.Models.Vehiculo>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+@foreach (var item in Model)
+{
+    <div>
+@item.marca
+        <br/>
+@item.modelo<br/>
+@item.matricula
+
+        <ul>
+            @foreach (var con in item.Conductor)
+            {
+                <li>
+                  @Html.ActionLink(con.nombre+" "+con.apellidos,"Detalle",
+                  "Conductores",new{id=con.idConductor},null)  
+                </li>
+            }
+
+        </ul>
+        @Html.ActionLink("Modificar","Modificar",new{item.id})
+        @Html.ActionLink("Borrar", "Borrar", new { item.id })
+    </div>
+
+}
+
+@Html.ActionLink("Alta","Alta")
+
+
+
+
+
+
+
+
+
+
+

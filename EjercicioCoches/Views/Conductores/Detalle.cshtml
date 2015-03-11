@@ -1,0 +1,42 @@
+﻿@model EjercicioCoches.Models.Conductor
+
+@{
+    ViewBag.Title = "Detalle";
+}
+
+<h2>Detalle</h2>
+
+<div>
+    <h4>Conductor</h4>
+    <hr />
+    <dl class="dl-horizontal">
+       
+
+        <dt>
+            @Html.DisplayNameFor(model => model.nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.apellidos)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.apellidos)
+        </dd>
+
+        <dt>@Html.DisplayFor(o => o.Licencias)</dt>
+        <dd>
+            @foreach (var l in Model.Licencias)
+            {
+                @l.nombre
+                <br/>
+            }
+
+        </dd>
+
+    </dl>
+</div>
