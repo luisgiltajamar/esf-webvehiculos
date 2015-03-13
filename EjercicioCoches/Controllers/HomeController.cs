@@ -93,6 +93,28 @@ namespace EjercicioCoches.Controllers
 
             return RedirectToAction("Index");
         }
+
+        public ActionResult ListadoAjax()
+        {
+            return  PartialView("_Listado",db.Vehiculo);
+        }
+
+        public ActionResult AltaAjax(Vehiculo v)
+        {
+            db.Vehiculo.Add(v);
+
+            try
+            {
+                db.SaveChanges();
+                return Json("OK");
+            }
+            catch (Exception e)
+            {
+                return Json("Error");
+            }
+
+            
+        }
     }
 }
 

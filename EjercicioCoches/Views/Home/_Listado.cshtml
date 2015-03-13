@@ -1,0 +1,28 @@
+﻿@model IEnumerable<EjercicioCoches.Models.Vehiculo>
+@foreach (var item in Model)
+{
+    <div>
+        @item.marca
+        <br />
+        @item.modelo<br />
+        @item.matricula
+
+        <ul>
+            @foreach (var con in item.Conductor)
+            {
+                <li>
+                    @*@Html.ActionLink(con.nombre + " " + con.apellidos, "Detalle",
+                  "Conductores", new { id = con.idConductor }, null)*@
+
+                    <a href="#" onclick="detalle(@con.idConductor)">@con.nombre @con.apellidos</a>
+
+                </li>
+            }
+
+        </ul>
+        @Html.ActionLink("Modificar", "Modificar", new { item.id })
+        @Html.ActionLink("Borrar", "Borrar", new { item.id })
+    </div>
+
+}
+

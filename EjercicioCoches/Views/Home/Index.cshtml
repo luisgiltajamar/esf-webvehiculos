@@ -5,37 +5,105 @@
 
 <h2>Index</h2>
 
-@foreach (var item in Model)
-{
-    <div>
-@item.marca
-        <br/>
-@item.modelo<br/>
-@item.matricula
 
-        <ul>
-            @foreach (var con in item.Conductor)
-            {
-                <li>
-                  @Html.ActionLink(con.nombre+" "+con.apellidos,"Detalle",
-                  "Conductores",new{id=con.idConductor},null)  
-                </li>
-            }
-
-        </ul>
-        @Html.ActionLink("Modificar","Modificar",new{item.id})
-        @Html.ActionLink("Borrar", "Borrar", new { item.id })
-    </div>
-
-}
-
-@Html.ActionLink("Alta","Alta")
+@*@Html.ActionLink("Alta","Alta")*@
+<a href="#" id="lnkAlta">Nuevo vehículo</a>
+<div id="contenido">@Html.Partial("_Listado", Model)</div>
 
 
+<div id="modAlta" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Nuevo vehículo</h4>
+            </div>
+            <div class="modal-body">
+                <input type="text" id="txtMatricula" placeholder="Matrícula"/>
+                <input type="text" id="txtMarca" placeholder="Marca"/>
+                <input type="text" id="txtModelo" placeholder="Modelo" />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                <button id="btnGuardar" type="button" class="btn btn-primary">Guardar</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div id="modDetalle" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Modal title</h4>
+            </div>
+            <div class="modal-body">
+               <div id="contenidoDetalle">Soy el detalle</div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<script>
+    
+    function detalle(id) {
+
+        $.getJSON("/Conductores/detalleAjax/" + id, function(res) {
+
+            var tx = res.nombre + " " + res.apellidos;
+            $("#contenidoDetalle").text(tx);
+            $("#modDetalle").modal();
+
+        });
 
 
+    }
+
+    $(document).ready(function() {
+
+        $("#lnkAlta").click(function() {
+            $("#modAlta").modal();
+        });
+
+        $("#btnGuardar").click(function() {
+            var data = {
+                marca: $("#txtMarca").val(),
+                modelo: $("#txtModelo").val(),
+                matricula: $("#txtMatricula").val()
+            };
+
+            $.ajax({
+                url: "/Home/AltaAjax",
+                type: "POST",
+                contentType: "application/json",
+                dataType: "json",
+                data: JSON.stringify(data),
+                success:function(res) {
+                    if (res === "OK") {
+                        $("#modAlta").modal('hide');
+                        $("#contenido").load("/Home/listadoAjax");
+                        alert("Alta realizada");
+                    } else {
+                        
+                        alert("Alta no realizada");
+                    }
+
+                }
 
 
+            })
+
+        });
+
+    });
+
+
+</script>
 
 
 

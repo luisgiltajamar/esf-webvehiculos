@@ -165,6 +165,7 @@
     <Content Include="Views\Home\Alta.cshtml" />
     <Content Include="Views\Home\Modificar.cshtml" />
     <Content Include="Views\Conductores\Detalle.cshtml" />
+    <Content Include="Views\Home\_Listado.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

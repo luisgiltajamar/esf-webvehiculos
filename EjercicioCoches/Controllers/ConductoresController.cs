@@ -19,6 +19,16 @@ namespace EjercicioCoches.Controllers
             return View(c);
         }
 
+        public ActionResult DetalleAjax(int id)
+
+        {
+
+            db.Configuration.LazyLoadingEnabled = false;
+            var c = db.Conductor.Find(id);
+
+            return Json(c,JsonRequestBehavior.AllowGet);
+        }
+
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
